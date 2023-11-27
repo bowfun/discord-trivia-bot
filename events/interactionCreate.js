@@ -10,6 +10,7 @@ module.exports = {
 
 		if (!command) {
 			console.error(`No command matching ${interaction.commandName} was found.`);
+			console.warn('Restart the bot to update commands.');
 			return;
 		}
 

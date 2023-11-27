@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const fs = require('fs');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,6 +16,11 @@ module.exports = {
 				.setRequired(true)
 				.setDescription('The answer to the clue.')),
 	async execute(interaction) {
+		// Read the JSON file
+		const rawData = await fs.readFileSync('./config.json');
+		const jsonData = JSON.parse(rawData).clues;
+		console.log(jsonData);
+
 		const clueID = interaction.options.getInteger('clue-number');
 		const answer = interaction.options.getString('answer');
 		if (clueID === 1) {

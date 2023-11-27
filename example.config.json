@@ -1,0 +1,16 @@
+{
+  "token": "(Put a Bot Token here)",
+  "clientId": "(Put your bot's ID here)",
+  "clues": [
+    {
+      "question": "What is the capital of France?",
+      "options": ["London", "Berlin", "Paris", "Madrid"],
+      "correctOption": 3
+    },
+    {
+      "question": "In which year was JavaScript first introduced?",
+      "options": ["1990", "1995", "2000", "2005"],
+      "correctOption": 2
+    }
+  ]
+}
