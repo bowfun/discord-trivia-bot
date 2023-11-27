@@ -1,2 +1,3 @@
-# discord-puzzle-bot
- A simple puzzle bot for Discord.
+# Discord Trivia Bot
+ A simple trivia bot for Discord.
+ This bot has parameters configured in a JSON file.
