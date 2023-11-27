@@ -1,0 +1,22 @@
+{
+  "name": "discord-puzzle-bot",
+  "version": "1.0.0",
+  "description": "A simple puzzle bot for Discord.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "puzzle",
+    "discord",
+    "bot"
+  ],
+  "author": "BowFun",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0"
+  }
+}
