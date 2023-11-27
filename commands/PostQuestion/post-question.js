@@ -8,6 +8,11 @@ module.exports = {
 		.setDescription('Answer a trivia question.')
 		.addIntegerOption(option =>
 			option
+				.setName('clue-id')
+				.setDescription('The ID of the trivia question you are answering.')
+				.setRequired(true))
+		.addIntegerOption(option =>
+			option
 				.setName('answer')
 				.setRequired(true)
 				.setDescription('The number for the answer to the trivia question.')),
@@ -15,6 +20,7 @@ module.exports = {
 		const rawData = fs.readFileSync('./config.json');
 		const jsonData = JSON.parse(rawData).clues;
 
+		const clueID = interaction.options.getInteger('clue-id');
 		const answer = interaction.options.getInteger('answer');
 		for (const quiz of jsonData) {
 			if (clueID === quiz.id) {
@@ -27,6 +33,6 @@ module.exports = {
 				}
 			}
 		}
-		await interaction.reply({ content: 'There is no active question.', ephemeral: true });
+		await interaction.reply({ content: 'Invalid question ID.', ephemeral: true });
 	},
 };

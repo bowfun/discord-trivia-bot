@@ -3,11 +3,13 @@
   "clientId": "(Put your bot's ID here)",
   "clues": [
     {
+      "id": 1,
       "question": "What is the capital of France?",
       "options": ["London", "Berlin", "Paris", "Madrid"],
       "correctOption": 3
     },
     {
+      "id": 2,
       "question": "In which year was JavaScript first introduced?",
       "options": ["1990", "1995", "2000", "2005"],
       "correctOption": 2
