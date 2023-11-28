@@ -6,7 +6,7 @@ const { getRunningID, startQuiz, endQuiz } = require('../../active-question');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('start-trivia')
-		.setDescription('Run')
+		.setDescription('Start a trivia question.')
 		.addIntegerOption(option =>
 			option
 				.setName('trivia-id')
@@ -32,7 +32,7 @@ module.exports = {
 
 		for (const question of jsonData) {
 			if (triviaID === question.id) {
-				if (getRunningID !== 0 && override === false) {
+				if (getRunningID !== 0 && !override) {
 					interaction.reply({ content: 'There is already a question running. Use the override option to cancel the previous question and create this one.', ephemeral: true });
 					return;
 				}
