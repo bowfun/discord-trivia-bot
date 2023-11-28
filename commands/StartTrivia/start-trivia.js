@@ -4,8 +4,8 @@ const fs = require('fs');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('answer-question')
-		.setDescription('Answer a trivia question.')
+		.setName('start-trivia')
+		.setDescription('Run')
 		.addIntegerOption(option =>
 			option
 				.setName('clue-id')
