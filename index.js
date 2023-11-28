@@ -41,7 +41,7 @@ try {
 	const clues = JSON.parse(fs.readFileSync('config.json', 'utf8')).trivia;
 	for (const clueData of clues) {
 		if (clueData.id === 0) {
-			console.error('One or more of your questions');
+			console.error('One or more of your questions has an ID of 0. The bot will disable until this is fixed.');
 			client.destroy;
 			return;
 		}

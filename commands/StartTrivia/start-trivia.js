@@ -1,6 +1,7 @@
 /* eslint-disable brace-style */
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
+const { getRunningID, startQuiz, endQuiz } = require('../../active-question');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,31 +9,45 @@ module.exports = {
 		.setDescription('Run')
 		.addIntegerOption(option =>
 			option
-				.setName('clue-id')
-				.setDescription('The ID of the trivia question you are answering.')
+				.setName('trivia-id')
+				.setDescription('The ID of the trivia question you are starting.')
 				.setRequired(true))
 		.addIntegerOption(option =>
 			option
-				.setName('answer')
+				.setName('max-winners')
 				.setRequired(true)
-				.setDescription('The number for the answer to the trivia question.')),
+				.setDescription('The maximum amount of winners in a game (after which the game ends).'))
+		.addBooleanOption(option =>
+			option
+				.setName('override')
+				.setRequired(false)
+				.setDescription('Stop the active question (if there is one) and start this one.')),
 	async execute(interaction) {
 		const rawData = fs.readFileSync('./config.json');
 		const jsonData = JSON.parse(rawData).trivia;
 
-		const clueID = interaction.options.getInteger('clue-id');
-		const answer = interaction.options.getInteger('answer');
-		for (const quiz of jsonData) {
-			if (clueID === quiz.id) {
-				if (answer === quiz.correctOption) {
-					await interaction.reply({ content: 'Correct answer!', ephemeral: true });
-					return;
-				} else {
-					await interaction.reply({ content: 'Incorrect answer.', ephemeral: true });
+		const triviaID = interaction.options.getInteger('trivia-id');
+		const maxWinners = interaction.options.getInteger('max-winners');
+		const override = interaction.options.getBoolean('override');
+
+		for (const question of jsonData) {
+			if (triviaID === question.id) {
+				if (getRunningID !== 0 && override === false) {
+					interaction.reply({ content: 'There is already a question running. Use the override option to cancel the previous question and create this one.', ephemeral: true });
 					return;
 				}
+				if (override) {
+					endQuiz();
+				}
+				if (maxWinners <= 0) {
+					interaction.reply({ content: 'Max winners must be 1 or more.', ephemeral: true });
+					return;
+				}
+				startQuiz(question.id, maxWinners);
+				interaction.reply({ content: 'Quiz started successfully.', ephemeral: true });
+				return;
 			}
 		}
-		await interaction.reply({ content: 'No quiz is currently running.', ephemeral: true });
+		await interaction.reply({ content: 'This is an invalid trivia question ID.', ephemeral: true });
 	},
 };

@@ -7,8 +7,9 @@ let maxAnswers = 0;
 let totalAnswers = 0;
 
 // When a /start-trivia command is used.
-function startQuiz(quizID) {
+function startQuiz(quizID, maximumAnswers) {
     runningQuestionID = quizID;
+    maxAnswers = maximumAnswers;
 }
 
 // Function to update trivia questions for a user
@@ -37,11 +38,11 @@ function updateTriviaCount(userId) {
     fs.writeFileSync('data.json', jsonData);
     console.log(`Trivia count updated for ${userId}.`);
   }
-  // Successful answer on a quiz!
-  function quizAnswered(userID) {
+  // Successful answer on a question!
+  function triviaAnswered(userID) {
     // Increment totalAnswers
     totalAnswers += 1;
-    // If maxAnswers is reached, end the quiz
+    // If maxAnswers is reached, end it.
     if (maxAnswers === totalAnswers) {
       endQuiz();
     }
@@ -56,9 +57,10 @@ function endQuiz() {
     maxAnswers = 0;
 }
 
+
 // This returns the running question, simple :)
 function getRunningID() {
     return runningQuestionID;
 }
 
-module.exports = getRunningID, quizAnswered;
+module.exports = getRunningID, triviaAnswered, endQuiz, startQuiz;
