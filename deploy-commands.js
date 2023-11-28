@@ -1,5 +1,5 @@
 /* eslint-disable brace-style */
-const { REST, Routes, Client } = require('discord.js');
+const { REST, Routes } = require('discord.js');
 const { clientId, token } = require('./config.json');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -39,7 +39,7 @@ function DeployCommands(guildId) {
 				Routes.applicationGuildCommands(clientId, guildId),
 				{ body: commands },
 			);
- 
+
 			console.log(`Successfully reloaded ${data.length} application (/) commands for guild ${guildId}.`);
 		} catch (error) {
 			// And of course, make sure you catch and log any errors!

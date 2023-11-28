@@ -1,7 +1,7 @@
 /* eslint-disable brace-style */
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
-const { getRunningID, startQuiz, endQuiz } = require('../../active-question');
+const { startQuiz, endQuiz } = require('../../active-question');
 
 module.exports = {
 	data: new SlashCommandBuilder()
