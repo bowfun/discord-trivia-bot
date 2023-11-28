@@ -5,7 +5,7 @@ const { getRunningID, triviaAnswered } = require('../../active-question');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('answer-question')
+		.setName('answer')
 		.setDescription('Answer a trivia question.')
 		.addIntegerOption(option =>
 			option

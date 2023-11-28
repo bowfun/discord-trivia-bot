@@ -1,5 +1,5 @@
 /* eslint-disable brace-style */
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const { startQuiz, endQuiz } = require('../../active-question');
 
@@ -33,6 +33,19 @@ module.exports = {
 				}
 				startQuiz(question.id, maxWinners);
 				interaction.reply({ content: 'Quiz started successfully.', ephemeral: true });
+				const triviaEmbed = new EmbedBuilder()
+					.setColor(0x0099FF)
+					.setTitle('New trivia question!')
+					.setDescription('A new trivia question is available. Answer it with /answer (answer).')
+					.addFields(
+						{ name: 'Regular field title', value: 'Some value here' },
+						{ name: 'Regular field title', value: 'Some value here' },
+						{ name: 'Inline field title', value: 'Some value here' },
+						{ name: 'Inline field title', value: 'Some value here' },
+					)
+					.setTimestamp()
+					.setFooter({ text: `Trivia question ID ${question.id}` });
+				interaction.channel.send({ embeds: [triviaEmbed] });
 				return;
 			}
 		}
