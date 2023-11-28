@@ -1,3 +1,4 @@
+/* eslint-disable brace-style */
 /* eslint-disable indent */
 const fs = require('fs');
 
@@ -10,17 +11,43 @@ function startQuiz(quizID) {
     runningQuestionID = quizID;
 }
 
-// Successful answer on a quiz!
-function quizAnswered(userID) {
-    totalAnswers = totalAnswers + 1;
-    if (maxAnswers === totalAnswers) {
-        endQuiz();
+// Function to update trivia questions for a user
+function updateTriviaCount(userId) {
+    // Read existing data from the file
+    let userData;
+    try {
+      const data = fs.readFileSync('data.json', 'utf8');
+      userData = JSON.parse(data);
+    } catch (err) {
+      // If the file doesn't exist or is empty, initialize userData as an empty array
+      userData = [];
     }
+    // Find the user in the existing data
+    const userIndex = userData.findIndex(user => user.userId === userId);
+    if (userIndex !== -1) {
+      // User found, increment trivia count
+      userData[userIndex].triviaQuestionsAnswered += 1;
+    } else {
+      // User not found, add a new entry with trivia count set to 1
+      userData.push({ userId, triviaQuestionsAnswered: 1 });
+    }
+    // Convert the updated data to JSON format
     const jsonData = JSON.stringify(userData, null, 2);
-    // Write to the file
+    // Write the updated data back to the file
     fs.writeFileSync('data.json', jsonData);
-    console.debug('Data has been written to data.json');
-}
+    console.log(`Trivia count updated for ${userId}.`);
+  }
+  // Successful answer on a quiz!
+  function quizAnswered(userID) {
+    // Increment totalAnswers
+    totalAnswers += 1;
+    // If maxAnswers is reached, end the quiz
+    if (maxAnswers === totalAnswers) {
+      endQuiz();
+    }
+    // Update trivia count for the user
+    updateTriviaCount(userID);
+  }
 
 // This clears the quiz and prepares for another.
 function endQuiz() {
@@ -34,4 +61,4 @@ function getRunningID() {
     return runningQuestionID;
 }
 
-module.exports = getRunningID;
+module.exports = getRunningID, quizAnswered;

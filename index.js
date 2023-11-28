@@ -1,7 +1,7 @@
 /* eslint-disable brace-style */
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, ReactionUserManager } = require('discord.js');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -35,6 +35,21 @@ for (const file of eventFiles) {
 	} else {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
+}
+
+try {
+	const clues = JSON.parse(fs.readFileSync('config.json', 'utf8')).trivia;
+	for (const clueData of clues) {
+		if (clueData.id === 0) {
+			console.error('One or more of your questions');
+			client.destroy;
+			return;
+		}
+	}
+} catch (err) {
+	console.error('There was an error loading your config.json file. Bot will disable until this is fixed.');
+	client.destroy;
+	return;
 }
 
 client.login(token);

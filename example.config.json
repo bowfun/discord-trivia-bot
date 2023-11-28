@@ -1,7 +1,7 @@
 {
   "token": "(Put a Bot Token here)",
   "clientId": "(Put your bot's ID here)",
-  "clues": [
+  "trivia": [
     {
       "id": 1,
       "question": "What is the capital of France?",

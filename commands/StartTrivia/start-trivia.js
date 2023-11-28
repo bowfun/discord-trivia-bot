@@ -18,7 +18,7 @@ module.exports = {
 				.setDescription('The number for the answer to the trivia question.')),
 	async execute(interaction) {
 		const rawData = fs.readFileSync('./config.json');
-		const jsonData = JSON.parse(rawData).clues;
+		const jsonData = JSON.parse(rawData).trivia;
 
 		const clueID = interaction.options.getInteger('clue-id');
 		const answer = interaction.options.getInteger('answer');
@@ -33,6 +33,6 @@ module.exports = {
 				}
 			}
 		}
-		await interaction.reply({ content: 'Invalid question ID.', ephemeral: true });
+		await interaction.reply({ content: 'No quiz is currently running.', ephemeral: true });
 	},
 };

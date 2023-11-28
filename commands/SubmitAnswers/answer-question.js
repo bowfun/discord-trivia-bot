@@ -1,6 +1,7 @@
 /* eslint-disable brace-style */
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
+const getRunningID = require('../../active-question')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -17,7 +18,7 @@ module.exports = {
 
 		const answer = interaction.options.getInteger('answer');
 		for (const quiz of jsonData) {
-			if (clueID === quiz.id) {
+			if (getRunningID() === quiz.id) {
 				if (answer === quiz.correctOption) {
 					await interaction.reply({ content: 'Correct answer!', ephemeral: true });
 					return;
