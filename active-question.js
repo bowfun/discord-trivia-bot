@@ -36,7 +36,6 @@ const updateTriviaCount = (userId) => {
     const jsonData = JSON.stringify(userData, null, 2);
     // Write the updated data back to the file
     fs.writeFileSync('data.json', jsonData);
-    console.log(`Trivia count updated for ${userId}.`);
 };
 
 // Successful answer on a question!
