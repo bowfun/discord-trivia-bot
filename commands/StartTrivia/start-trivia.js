@@ -36,15 +36,16 @@ module.exports = {
 				const triviaEmbed = new EmbedBuilder()
 					.setColor(0x0099FF)
 					.setTitle('New trivia question!')
-					.setDescription('A new trivia question is available. Answer it with /answer (answer).')
+					.setDescription(`A new trivia game is starting! Answer the question with /answer (The number for the answer).\nQuestion: ${question.question}`)
 					.addFields(
-						{ name: 'Regular field title', value: 'Some value here' },
-						{ name: 'Regular field title', value: 'Some value here' },
-						{ name: 'Inline field title', value: 'Some value here' },
-						{ name: 'Inline field title', value: 'Some value here' },
+						question.options.map((option, index) => {
+							return {
+								name: `Option ${index + 1}`,
+								value: option,
+							};
+						}),
 					)
-					.setTimestamp()
-					.setFooter({ text: `Trivia question ID ${question.id}` });
+					.setFooter({ text: `Trivia question ID ${question.id} | Max winners: ${maxWinners}` });
 				interaction.channel.send({ embeds: [triviaEmbed] });
 				return;
 			}
