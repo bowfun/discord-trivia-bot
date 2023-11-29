@@ -2,6 +2,7 @@
   "token": "(Put a Bot Token here)",
   "clientId": "(Put your bot's ID here)",
   "adminRoleIds": ["(Put as many role IDs as you want here)", "(seperated by commas)"],
+  "cooldownDuration": 5,
   "trivia": [
     {
       "id": 1,

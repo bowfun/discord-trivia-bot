@@ -2,6 +2,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const { getRunningID, triviaAnswered } = require('../../active-question');
+const { isOnCooldown, startCooldown } = require('../../cooldowns');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,15 +17,22 @@ module.exports = {
 		const rawData = fs.readFileSync('./config.json');
 		const jsonData = JSON.parse(rawData).trivia;
 
+		if (isOnCooldown(interaction.user.id)) {
+			await interaction.reply({ content: 'You are on cooldown!', ephemeral: true });
+			return;
+		}
+
 		const answer = interaction.options.getInteger('answer');
 		for (const quiz of jsonData) {
 			if (getRunningID() === quiz.id) {
 				if (answer === quiz.correctOption) {
 					await interaction.reply({ content: 'Correct answer!', ephemeral: true });
 					triviaAnswered(interaction.user.id);
+					startCooldown(interaction.user.id);
 					return;
 				} else {
 					await interaction.reply({ content: 'Incorrect answer.', ephemeral: true });
+					startCooldown(interaction.user.id);
 					return;
 				}
 			}
