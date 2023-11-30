@@ -2,7 +2,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const { getRunningID, triviaAnswered } = require('../../active-question');
-const { isOnCooldown, startCooldown } = require('../../cooldowns');
+const { isOnCooldown, startCooldown, getCooldownTime } = require('../../cooldowns');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,7 +18,8 @@ module.exports = {
 		const jsonData = JSON.parse(rawData).trivia;
 
 		if (isOnCooldown(interaction.user.id)) {
-			await interaction.reply({ content: 'You are on cooldown!', ephemeral: true });
+			// A quirk of text formatting
+			await interaction.reply({ content: `You are on cooldown! This cooldown will end <t:${Math.round(getCooldownTime(interaction.user.id) / 1000)}:R>`, ephemeral: true });
 			return;
 		}
 

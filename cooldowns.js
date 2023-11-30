@@ -35,4 +35,15 @@ function isOnCooldown(userId) {
 	}
 }
 
-module.exports = { startCooldown, isOnCooldown };
+function getCooldownTime(userId) {
+	const now = Date.now();
+
+	// Check if user exists in cooldowns and if the cooldown period has passed
+	if (cooldowns[userId] && now < cooldowns[userId]) {
+		return cooldowns[userId];
+	} else {
+		return now;
+	}
+}
+
+module.exports = { startCooldown, isOnCooldown, getCooldownTime };
