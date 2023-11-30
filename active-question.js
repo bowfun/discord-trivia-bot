@@ -57,7 +57,7 @@ const endQuiz = () => {
     maxAnswers = 0;
 };
 
-// This returns the running question, simple :)
+// This returns the running question, simple
 const getRunningID = () => {
     return runningQuestionID;
 };

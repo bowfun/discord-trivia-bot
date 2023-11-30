@@ -16,17 +16,15 @@ module.exports = {
 			option
 				.setName('max-winners')
 				.setRequired(true)
-				.setDescription('The maximum amount of winners fro a question (after which the trivia game ends).')),
+				.setDescription('The maximum amount of winners for a question (after which the trivia game ends).')),
 	async execute(interaction) {
 		const rawData = fs.readFileSync('./config.json');
-		const allowedRoles = JSON.parse(rawData).adminRoleIds;
 		const jsonData = JSON.parse(rawData).trivia;
 
 		const triviaID = interaction.options.getInteger('trivia-id');
 		const maxWinners = interaction.options.getInteger('max-winners');
 
-		const hasRoles = allowedRoles.some((roleID) => interaction.member.roles.cache.has(roleID));
-		if (!hasRoles) {
+		if (interaction.member.roles.cache.has(JSON.parse(rawData).adminRoleId) === false) {
 			interaction.reply({ content: 'You do not have permission to use this command!', ephemeral: true });
 			return;
 		}
